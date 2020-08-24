@@ -18,8 +18,8 @@ void add_edge(std::vector<int> adj_list[], int vertex_1, int vertex_2) {
 
 
 std::vector<int> find_adjacent_vertices(int current_row, int current_col, int num_rows, int num_cols,  int pos_value) {
-    std::vector<int> dir_row = {0, 0, 1, -1};
-    std::vector<int> dir_col = {1,-1, 0, 0};
+    std::vector<int> dir_row = {-1, 0, 0, 1};
+    std::vector<int> dir_col = {0,-1, 1, 0};
 
     int next_row, next_col;
     std::vector<int> neighbours;
