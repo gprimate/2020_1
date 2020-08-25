@@ -1,7 +1,11 @@
 #include "functions.h"
 
 
+
+
+
 std::vector<int> find_adjacent_vertices(int current_row, int current_col, int num_rows, int num_cols,  int pos_value) {
+
     //Possible directions to take in the game
     std::vector<int> dir_row = {-1, 0, 0, 1};
     std::vector<int> dir_col = {0,-1, 1, 0};
@@ -38,8 +42,10 @@ void create_adj_list(std::vector<std::vector<int>> input_matrix, std::vector<int
             int id = i * num_cols + j;
             int pos_value = input_matrix[i][j];
 
+            //Finds the possible moves
             std::vector<int> neighbours = find_adjacent_vertices(i,j,num_rows, num_cols, pos_value);
 
+            //Adds the newly found moves to the adjancent list
             for (unsigned int k = 0; k < neighbours.size(); k++) {
                 adj_list[id].push_back(neighbours[k]);
             }
@@ -56,20 +62,23 @@ bool BFS(std::vector<int> adj_list[], int src, int num_vertices, std::vector<int
     int dest = num_vertices - 1;
     std::queue<int> queue; 
     std::vector<bool> visited(num_vertices, false);
- 
+    
+    //Initializes values for the source vertex
     visited[src] = true; 
     distance_src[src] = 0; 
     queue.push(src); 
-  
+    
     while (!queue.empty()) { 
 
         int u = queue.front(); 
         queue.pop(); 
 
         for (unsigned int i = 0; i < adj_list[u].size(); i++) { 
-
+            
+            //Checks if vertex was visited
             if (visited[adj_list[u][i]] == false) { 
-
+                
+                //Stores the distance from the source vertex and stores the previous vertex
                 visited[adj_list[u][i]] = true; 
                 distance_src[adj_list[u][i]] = distance_src[u] + 1; 
                 previous_vertex[adj_list[u][i]] = u; 
@@ -87,6 +96,7 @@ bool BFS(std::vector<int> adj_list[], int src, int num_vertices, std::vector<int
 
 
 
+// Function that return the shortest path given a source vertex
 std::vector<int> get_shortest_path(std::vector<int> adj_list[], int src, int num_vertices) { 
     
     int dest = num_vertices - 1;
@@ -98,14 +108,14 @@ std::vector<int> get_shortest_path(std::vector<int> adj_list[], int src, int num
         return path; 
     } 
   
-    
     int crawl = dest; 
     path.push_back(crawl); 
+
     while (pred[crawl] != -1) { 
         path.push_back(pred[crawl]); 
         crawl = pred[crawl]; 
     } 
-  
+
     return path;
 } 
 
@@ -125,6 +135,7 @@ void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_
         std::vector<int> path_try = get_shortest_path(adj_list, src[i], num_vertices);
         bool update = false;
 
+        //Checks if path exists
         if (path_try.size() != 0) {
             if (shortest_path_size == 0) {
                 update = true;
@@ -132,6 +143,7 @@ void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_
             } else if (path_try.size() < shortest_path_size) {
                 update = true;
 
+            //If a path is the same size as the smallest, checks which one of the two should be considered
             } else if (path_try.size() == shortest_path_size && shortest_path_size > 2) {
                 int previous_jump = get_jump(input_matrix, path[2]);
                 int current_jump = get_jump(input_matrix, path_try[2]);
@@ -141,6 +153,7 @@ void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_
                 }
             }
 
+            //Updates variables of the funcion if one of the "if's" is successful
             if (update) {
                 path = path_try;
                 shortest_path_size = path.size();
@@ -148,7 +161,6 @@ void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_
             }
         }
     }
-
 
     if (shortest_path_size == 0) {
         std::cout << "SEM VENCEDORES";
@@ -161,6 +173,7 @@ void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_
 
 
 
+//Returns the number of jumps that a given vertex allows
 int get_jump(std::vector<std::vector<int>> input_matrix, int src) {
     int num_cols = input_matrix[0].size();
 
