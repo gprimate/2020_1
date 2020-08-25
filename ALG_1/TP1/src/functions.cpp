@@ -59,3 +59,75 @@ void create_adj_list(std::vector<std::vector<int>> input_matrix, std::vector<int
         }
     }
 }
+
+
+
+
+bool BFS(std::vector<int> adj_list[], int src, int num_vertices, std::vector<int> & previous_vertex, std::vector<int> & distance_src) { 
+    
+    int dest = num_vertices - 1;
+    std::queue<int> queue; 
+    std::vector<bool> visited(num_vertices, false);
+ 
+    visited[src] = true; 
+    distance_src[src] = 0; 
+    queue.push(src); 
+  
+    while (!queue.empty()) { 
+
+        int u = queue.front(); 
+        queue.pop(); 
+
+        for (int i = 0; i < adj_list[u].size(); i++) { 
+
+            if (visited[adj_list[u][i]] == false) { 
+
+                visited[adj_list[u][i]] = true; 
+                distance_src[adj_list[u][i]] = distance_src[u] + 1; 
+                previous_vertex[adj_list[u][i]] = u; 
+                queue.push(adj_list[u][i]); 
+  
+                if (adj_list[u][i] == dest) 
+                    return true; 
+            } 
+        } 
+    } 
+    return false; 
+}
+
+
+
+
+
+void printShortestDistance(std::vector<int> adj[], int s, int dest, int v) { 
+    // predecessor[i] array stores predecessor of 
+    // i and distance array stores distance of i 
+    // from s 
+    std::vector<int> pred(v,-1);
+    std::vector<int> dist(v,-1);
+
+  
+    if (BFS(adj, s, v, pred, dist) == false) { 
+        std::cout << "Given source and destination"
+             << " are not connected"; 
+        return; 
+    } 
+  
+    // vector path stores the shortest path 
+    std::vector<int> path; 
+    int crawl = dest; 
+    path.push_back(crawl); 
+    while (pred[crawl] != -1) { 
+        path.push_back(pred[crawl]); 
+        crawl = pred[crawl]; 
+    } 
+  
+    // distance from source is in distance array 
+    std::cout << "Shortest path length is : "
+         << dist[dest]; 
+  
+    // printing path from source to destination 
+    std::cout << "\nPath is::\n"; 
+    for (int i = path.size() - 1; i >= 0; i--) 
+        std::cout << path[i] << " "; 
+} 

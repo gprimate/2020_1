@@ -1,20 +1,21 @@
 #include "functions.h"
 
 
-void testing_shit(std::vector< std::vector<int> >& my_vec) {
-    my_vec[0][1] = 99;
+void testing_shit(std::vector<int> & my_vec) {
+    my_vec[3] = 99;
 }
 
 int main() {   
    
     std::vector<int> adj[9];
-  
+    std::vector<int> blueberry(5,1);
     
     std::vector<std::vector<int>> matrix = {{2,1,0},
                                             {0,1,1}, 
                                             {2,2,0} };
     
     create_adj_list(matrix,adj,3,3);
+
 
     for (int i = 0; i < 9; i++) {
         std::cout << i << " -> ";
@@ -25,7 +26,10 @@ int main() {
         std::cout << std::endl;
     }  
     
- 
+
+    testing_shit(blueberry);
+    std::cout << blueberry[3] << std::endl;
+    printShortestDistance(adj,0,8,9);
     // std::vector<std::vector<int>> gg(5, std::vector<int>(5, -1));
 
 
