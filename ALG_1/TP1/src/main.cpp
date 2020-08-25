@@ -6,18 +6,38 @@ void testing_shit(std::vector<int> & my_vec) {
 }
 
 int main() {   
-   
-    std::vector<int> adj[9];
-    std::vector<int> blueberry(5,1);
-    
-    std::vector<std::vector<int>> matrix = {{2,1,0},
-                                            {0,1,1}, 
-                                            {2,2,0} };
-    
-    create_adj_list(matrix,adj,3,3);
+    int num_rows, num_cols, num_players, num_vertices;
 
+    std::cin >> num_rows >> num_cols;
+    std::cin >> num_players;
 
-    for (int i = 0; i < 9; i++) {
+    std::vector<std::vector<int>> matrix(num_rows, std::vector<int>(num_cols));
+    std::vector<int> players(num_players);
+
+    for (int i = 0; i < num_rows; i++) {
+        for (int j = 0; j < num_cols; j++) {
+            std::cin >> matrix[i][j];
+        }
+    }
+
+    for (int i = 0; i < num_players; i++) {
+        int row, col;
+        std::cin >> row >> col;
+        players[i] = row * num_cols + col;
+    }
+    
+    num_vertices = num_rows * num_cols;
+
+    std::vector<int> adj[num_vertices];
+
+    
+    
+    create_adj_list(matrix, adj, num_rows, num_cols);
+
+    play_game(matrix,adj,players, num_vertices);
+
+    /*
+    for (int i = 0; i < 12; i++) {
         std::cout << i << " -> ";
 
         for (int j = 0; j < adj[i].size(); j++) {
@@ -25,11 +45,50 @@ int main() {
         }
         std::cout << std::endl;
     }  
-    
+    printShortestDistance(adj,6,12);
+    */
 
-    testing_shit(blueberry);
-    std::cout << blueberry[3] << std::endl;
-    printShortestDistance(adj,0,8,9);
+
+    /*
+    printShortestDistance(adj,2,9);
+
+    std::vector<int> spath = get_shortest_path(adj,2,9);
+
+    for (int i = 0; i < spath.size(); i++){
+        std::cout << spath[i] << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << spath.size() << std::endl;
+    */
+   
+
+   
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // std::vector<std::vector<int>> gg(5, std::vector<int>(5, -1));
 
 

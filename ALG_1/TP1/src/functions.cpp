@@ -8,14 +8,6 @@ std::vector<std::vector<bool>> empty_visited_matrix (int num_rows, int num_cols)
 
 
 
-void add_edge(std::vector<int> adj_list[], int vertex_1, int vertex_2) {
-    adj_list[vertex_1].push_back(vertex_2); 
-    adj_list[vertex_2].push_back(vertex_1); 
-}
-
-
-
-
 
 std::vector<int> find_adjacent_vertices(int current_row, int current_col, int num_rows, int num_cols,  int pos_value) {
     std::vector<int> dir_row = {-1, 0, 0, 1};
@@ -43,7 +35,7 @@ std::vector<int> find_adjacent_vertices(int current_row, int current_col, int nu
 
 
 
-void create_adj_list(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_list[], int num_cols, int num_rows) {
+void create_adj_list(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_list[], int num_rows, int num_cols) {
 
     for (int i = 0; i < num_rows; i++) {
         for (int j = 0; j < num_cols; j++) {
@@ -99,15 +91,16 @@ bool BFS(std::vector<int> adj_list[], int src, int num_vertices, std::vector<int
 
 
 
-void printShortestDistance(std::vector<int> adj[], int s, int dest, int v) { 
+void printShortestDistance(std::vector<int> adj_list[], int src, int num_vertices) { 
     // predecessor[i] array stores predecessor of 
     // i and distance array stores distance of i 
-    // from s 
-    std::vector<int> pred(v,-1);
-    std::vector<int> dist(v,-1);
+    // from src 
+    int dest = num_vertices - 1;
+    std::vector<int> pred(num_vertices,-1);
+    std::vector<int> dist(num_vertices,-1);
 
   
-    if (BFS(adj, s, v, pred, dist) == false) { 
+    if (BFS(adj_list, src, num_vertices, pred, dist) == false) { 
         std::cout << "Given source and destination"
              << " are not connected"; 
         return; 
@@ -131,3 +124,79 @@ void printShortestDistance(std::vector<int> adj[], int s, int dest, int v) {
     for (int i = path.size() - 1; i >= 0; i--) 
         std::cout << path[i] << " "; 
 } 
+
+std::vector<int> get_shortest_path(std::vector<int> adj_list[], int src, int num_vertices) { 
+    
+    int dest = num_vertices - 1;
+    std::vector<int> pred(num_vertices,-1);
+    std::vector<int> dist(num_vertices,-1);
+    std::vector<int> path; 
+
+    if (BFS(adj_list, src, num_vertices, pred, dist) == false) {   
+        return path; 
+    } 
+  
+    
+    int crawl = dest; 
+    path.push_back(crawl); 
+    while (pred[crawl] != -1) { 
+        path.push_back(pred[crawl]); 
+        crawl = pred[crawl]; 
+    } 
+  
+    return path;
+} 
+
+
+
+void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_list[], std::vector<int> src ,int num_vertices) {
+
+    char letters[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    int shortest_path_size = -1;
+    int id_winner = -1;
+    std::vector<int> path;
+
+
+    for (int i = 0; i < src.size(); i++) {
+        std::vector<int> path_try = get_shortest_path(adj_list, src[i], num_vertices);
+
+        if (path_try.size() != 0) {
+            if (shortest_path_size == -1) {
+                path = path_try;
+                shortest_path_size = path.size();
+                id_winner = i;
+
+            } else if (path_try.size() == shortest_path_size && shortest_path_size > 2) {
+                int previous_jump = get_jump(input_matrix, path[2]);
+                int current_jump = get_jump(input_matrix, path_try[2]);
+
+                if (current_jump < previous_jump) {
+                    path = path_try;
+                    shortest_path_size = path.size();
+                    id_winner = i;
+                }
+            } else if (path_try.size() < shortest_path_size) {
+                path = path_try;
+                shortest_path_size = path.size();
+                id_winner = i;
+            }
+        }
+    }
+
+    if (shortest_path_size == -1) {
+        std::cout << "SEM VENCEDORES";
+    } else {
+        std::cout << letters[id_winner] << std::endl << shortest_path_size -1;
+    }
+}
+
+
+
+int get_jump(std::vector<std::vector<int>> input_matrix, int src) {
+    int num_cols = input_matrix[0].size();
+
+    int row = int(src / num_cols);
+    int col = src % num_cols;
+
+    return input_matrix[row][col];
+}
