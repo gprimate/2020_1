@@ -1,9 +1,6 @@
 #include "functions.h"
 
 
-
-
-
 std::vector<int> find_adjacent_vertices(int current_row, int current_col, int num_rows, int num_cols,  int pos_value) {
 
     //Possible directions to take in the game
@@ -35,7 +32,7 @@ std::vector<int> find_adjacent_vertices(int current_row, int current_col, int nu
 
 void create_adj_list(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_list[], int num_rows, int num_cols) {
 
-    //Loops through the entire input matrix and transforms it into an adjancent list
+    //Loops through the entire input matrix and transforms it into an adjacency list
     for (int i = 0; i < num_rows; i++) {
         for (int j = 0; j < num_cols; j++) {
 
@@ -45,7 +42,7 @@ void create_adj_list(std::vector<std::vector<int>> input_matrix, std::vector<int
             //Finds the possible moves
             std::vector<int> neighbours = find_adjacent_vertices(i,j,num_rows, num_cols, pos_value);
 
-            //Adds the newly found moves to the adjancent list
+            //Adds the newly found moves to the adjacency list
             for (unsigned int k = 0; k < neighbours.size(); k++) {
                 adj_list[id].push_back(neighbours[k]);
             }

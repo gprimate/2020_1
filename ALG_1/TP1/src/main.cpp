@@ -22,16 +22,15 @@ int main() {
         players[i] = row * num_cols + col;
     }
 
+    //Calculates the number of vertices
     num_vertices = num_rows * num_cols;
 
     std::vector<int> adj[num_vertices];
 
-    
-    
+    //Creates the adjacency list
     create_adj_list(matrix, adj, num_rows, num_cols);
 
     play_game(matrix,adj,players, num_vertices);
 
-   
     return 0;
 }
