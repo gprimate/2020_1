@@ -134,7 +134,7 @@ int get_jump(std::vector<std::vector<int>> input_matrix, int src) {
 
 
 
-void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_list[], std::vector<int> src ,int num_vertices) {
+void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_list[], std::vector<int> src, int num_vertices) {
 
     char letters[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     unsigned int shortest_path_size = 0;

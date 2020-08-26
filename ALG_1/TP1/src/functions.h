@@ -12,4 +12,4 @@ std::vector<int> get_shortest_path(std::vector<int> adj_list[], int src, int num
 
 int get_jump(std::vector<std::vector<int>> input_matrix, int src);
 
-void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_list[], std::vector<int> src ,int num_vertices);
+void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_list[], std::vector<int> src, int num_vertices);
