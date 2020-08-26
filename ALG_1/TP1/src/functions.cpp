@@ -70,21 +70,21 @@ bool BFS(std::vector<int> adj_list[], int src, int num_vertices, std::vector<int
     
     while (!queue.empty()) { 
 
-        int u = queue.front(); 
+        int current_vertex = queue.front();
         queue.pop(); 
 
-        for (unsigned int i = 0; i < adj_list[u].size(); i++) { 
+        for (unsigned int i = 0; i < adj_list[current_vertex].size(); i++) { 
             
             //Checks if vertex was visited
-            if (visited[adj_list[u][i]] == false) { 
+            if (visited[adj_list[current_vertex][i]] == false) { 
                 
                 //Stores the distance from the source vertex and stores the previous vertex
-                visited[adj_list[u][i]] = true; 
-                distance_src[adj_list[u][i]] = distance_src[u] + 1; 
-                previous_vertex[adj_list[u][i]] = u; 
-                queue.push(adj_list[u][i]); 
+                visited[adj_list[current_vertex][i]] = true; 
+                distance_src[adj_list[current_vertex][i]] = distance_src[current_vertex] + 1; 
+                previous_vertex[adj_list[current_vertex][i]] = current_vertex; 
+                queue.push(adj_list[current_vertex][i]); 
   
-                if (adj_list[u][i] == dest) 
+                if (adj_list[current_vertex][i] == dest) 
                     return true; 
             } 
         } 

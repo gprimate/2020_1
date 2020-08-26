@@ -13,6 +13,6 @@ functions.o: functions.cpp
 test: $(EXEC)
 	@bash ../run_tests.sh $(EXEC) $(TMPOUT)
 
-clean: # remove todos os arquivos temporarios que forem gerados pela compilacao
-	rm -rf mergeSort.o months.o planet.o radixSort.o
+clean: 
+	@rm -rf *.o ${EXEC} rand_input
 
