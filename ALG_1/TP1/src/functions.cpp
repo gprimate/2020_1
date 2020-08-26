@@ -164,6 +164,7 @@ void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_
 
     if (shortest_path_size == 0) {
         std::cout << "SEM VENCEDORES";
+        
     } else {
         std::cout << letters[id_winner] << std::endl << shortest_path_size -1 << std::endl;
     }
