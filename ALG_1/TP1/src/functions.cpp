@@ -120,6 +120,20 @@ std::vector<int> get_shortest_path(std::vector<int> adj_list[], int src, int num
 
 
 
+//Returns the number of jumps that a given vertex allows
+int get_jump(std::vector<std::vector<int>> input_matrix, int src) {
+    int num_cols = input_matrix[0].size();
+
+    int row = int(src / num_cols);
+    int col = src % num_cols;
+
+    return input_matrix[row][col];
+}
+
+
+
+
+
 void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_list[], std::vector<int> src ,int num_vertices) {
 
     char letters[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -165,18 +179,4 @@ void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_
     } else {
         std::cout << letters[id_winner] << std::endl << shortest_path_size -1 << std::endl;
     }
-}
-
-
-
-
-
-//Returns the number of jumps that a given vertex allows
-int get_jump(std::vector<std::vector<int>> input_matrix, int src) {
-    int num_cols = input_matrix[0].size();
-
-    int row = int(src / num_cols);
-    int col = src % num_cols;
-
-    return input_matrix[row][col];
 }

@@ -4,6 +4,7 @@
 int main() {   
     int num_rows, num_cols, num_players, num_vertices;
 
+    //Input of game data
     std::cin >> num_rows >> num_cols;
     std::cin >> num_players;
 
