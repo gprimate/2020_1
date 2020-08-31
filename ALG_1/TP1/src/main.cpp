@@ -2,6 +2,7 @@
 
 
 int main() {   
+    
     int num_rows, num_cols, num_players, num_vertices;
 
     //Input of game data
@@ -10,7 +11,7 @@ int main() {
 
     std::vector<std::vector<int>> matrix(num_rows, std::vector<int>(num_cols));
     std::vector<int> players(num_players);
-
+    
     for (int i = 0; i < num_rows; i++) {
         for (int j = 0; j < num_cols; j++) {
             std::cin >> matrix[i][j];
@@ -22,16 +23,16 @@ int main() {
         std::cin >> row >> col;
         players[i] = row * num_cols + col;
     }
-
     //Calculates the number of vertices
     num_vertices = num_rows * num_cols;
 
-    std::vector<int> adj[num_vertices];
-
+    // std::vector<int> adj[num_vertices];
+    std::vector<std::vector<int>> adj(num_vertices, std::vector<int>());
+    
     //Creates the adjacency list
     create_adj_list(matrix, adj, num_rows, num_cols);
-
+    
     play_game(matrix,adj,players, num_vertices);
-
+    
     return 0;
 }

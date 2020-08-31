@@ -30,7 +30,7 @@ std::vector<int> find_adjacent_vertices(int current_row, int current_col, int nu
 
 
 
-void create_adj_list(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_list[], int num_rows, int num_cols) {
+void create_adj_list(std::vector<std::vector<int>> input_matrix, std::vector<std::vector<int>> & adj_list, int num_rows, int num_cols) {
 
     //Loops through the entire input matrix and transforms it into an adjacency list
     for (int i = 0; i < num_rows; i++) {
@@ -54,7 +54,7 @@ void create_adj_list(std::vector<std::vector<int>> input_matrix, std::vector<int
 
 
 
-bool BFS(std::vector<int> adj_list[], int src, int num_vertices, std::vector<int> & previous_vertex, std::vector<int> & distance_src) { 
+bool BFS(std::vector<std::vector<int>> & adj_list, int src, int num_vertices, std::vector<int> & previous_vertex, std::vector<int> & distance_src) { 
     
     int dest = num_vertices - 1;
     std::queue<int> queue; 
@@ -94,7 +94,7 @@ bool BFS(std::vector<int> adj_list[], int src, int num_vertices, std::vector<int
 
 
 // Function that return the shortest path given a source vertex
-std::vector<int> get_shortest_path(std::vector<int> adj_list[], int src, int num_vertices) { 
+std::vector<int> get_shortest_path(std::vector<std::vector<int>> & adj_list, int src, int num_vertices) { 
     
     int dest = num_vertices - 1;
     std::vector<int> pred(num_vertices,-1);
@@ -123,7 +123,6 @@ std::vector<int> get_shortest_path(std::vector<int> adj_list[], int src, int num
 //Returns the number of jumps that a given vertex allows
 int get_jump(std::vector<std::vector<int>> input_matrix, int src) {
     int num_cols = input_matrix[0].size();
-
     int row = int(src / num_cols);
     int col = src % num_cols;
 
@@ -134,7 +133,7 @@ int get_jump(std::vector<std::vector<int>> input_matrix, int src) {
 
 
 
-void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_list[], std::vector<int> src, int num_vertices) {
+void play_game(std::vector<std::vector<int>> input_matrix, std::vector<std::vector<int>> & adj_list, std::vector<int> src, int num_vertices) {
 
     char letters[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     unsigned int shortest_path_size = 0;
@@ -157,8 +156,9 @@ void play_game(std::vector<std::vector<int>> input_matrix, std::vector<int> adj_
             //If a path is the same size as the smallest, checks which one of the two should be considered
             } else if (path_try.size() == shortest_path_size && shortest_path_size > 2) {
                 int previous_jump = get_jump(input_matrix, path[2]);
+                
                 int current_jump = get_jump(input_matrix, path_try[2]);
-
+                
                 if (current_jump < previous_jump) {
                     update = true;
                 }
